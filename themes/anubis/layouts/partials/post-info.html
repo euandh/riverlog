@@ -2,23 +2,26 @@
 {{ if .Site.Params.dateFormat }}{{ $dateFormat = .Site.Params.dateFormat }}{{ end }}
 
 <div class="post-info">
-    {{ if .Params.date }}
-        <div class="post-date dt-published">
-            <a class="u-url" href="{{ .RelPermalink }}"><time datetime="{{ .Params.date.Format "2006-01-02" }}">
+    <div class="river-data" style="margin: 10px 0; padding: 15px; background: rgba(0,0,0,0.05); border-left: 4px solid #0077cc; border-radius: 4px;">
+        
+        {{ if .Params.date }}
+        <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 8px; color: #333;">
+            <time datetime="{{ .Params.date.Format "2006-01-02" }}">
                 {{- .Params.date.Format $dateFormat -}}
-            </time></a>
+            </time>
         </div>
-    {{ end }}
-
-    <div class="river-data" style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.05); border-left: 3px solid #0077cc;">
-    {{ with .Params.river }}<strong>River:</strong> {{ . }} | {{ end }}
-    {{ with .Params.section }}<strong>Section:</strong> {{ . }} | {{ end }}
-    {{ with .Params.level }}<strong>Level:</strong> {{ . }} | {{ end }} {{ with .Params.weather }}<br><small><strong>Weather:</strong> {{ . }}</small> {{ end }}
+        {{ end }}
+        
+        <div style="line-height: 1.6;">
+            {{ with .Params.river }}<strong>River:</strong> {{ . }} | {{ end }}
+            {{ with .Params.section }}<strong>Section:</strong> {{ . }} | {{ end }}
+            {{ with .Params.level }}<strong>Level:</strong> {{ . }} | {{ end }}
+        </div>
     </div>
 
     <div class="post-taxonomies">
         {{ if .Params.tags }}
-            <ul class="post-tags">
+            <ul class="post-tags" style="margin-top: 5px;">
                 {{ range .Params.tags }}
                 <li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a></li>
                 {{ end }}
