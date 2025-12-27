@@ -1,0 +1,16 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Whitewater Logbook'
+theme = 'anubis'
+
+[taxonomies]
+  river = 'river'
+  section = 'section'
+  level = 'level'
+  group = 'group'
+  weather = 'weather'
+
+[params]
+  disqusShortname = ""
+  author = 'euandh'
+  description = 'Personal river database'
