@@ -1,5 +1,5 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
+baseURL = 'https://euandh.github.io/riverlog/'
+languageCode = 'en-uk'
 title = 'Whitewater Logbook'
 theme = 'anubis'
 
