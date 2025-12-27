@@ -11,6 +11,7 @@ theme = 'anubis'
   weather = 'weather'
 
 [params]
-  disqusShortname = ""
   author = 'euandh'
   description = 'Personal river database'
+  mainSections = ["posts"] # This ensures your logs show up on the homepage
+  style = "auto"           # Enables the Dark/Light mode switcher

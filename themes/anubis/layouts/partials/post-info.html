@@ -22,6 +22,13 @@
     <a href="{{ .Site.BaseURL }}" class="p-name p-author post-hidden-author h-card" rel="me">{{ .Params.author | default .Site.Params.author }}</a>
 
 
+<div class="river-metadata" style="margin-bottom: 10px; font-weight: bold;">
+    {{ with .Params.river }} <span>River: {{ . }}</span> | {{ end }}
+    {{ with .Params.section }} <span>Section: {{ . }}</span> | {{ end }}
+    {{ with .Params.level }} <span>Level: {{ . }}</span> | {{ end }}
+    {{ with .Params.weather }} <br><small>Weather: {{ . }}</small>{{ end }}
+</div>
+
     <div class="post-taxonomies">
         {{ if .Params.categories }}
             <ul class="post-categories">
