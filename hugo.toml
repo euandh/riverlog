@@ -15,3 +15,13 @@ theme = 'anubis'
   description = 'Personal river database'
   mainSections = ["posts"] # This ensures your logs show up on the homepage
   style = "auto"           # Enables the Dark/Light mode switcher
+
+[[menu.main]]
+    name = "Rivers"
+    url = "/river/"
+    weight = 1
+
+[[menu.main]]
+    name = "Flow Levels"
+    url = "/level/"
+    weight = 2
