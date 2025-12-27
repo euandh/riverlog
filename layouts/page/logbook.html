@@ -1,0 +1,57 @@
+{{ define "main" }}
+<div class="logbook-container">
+    <h1>{{ .Title }}</h1>
+    
+    <input type="text" id="logSearch" onkeyup="filterTable()" placeholder="Filter by river, level, or group..." style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px;">
+
+    <table id="logTable" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f4f4f4; text-align: left; cursor: pointer;">
+                <th onclick="sortTable(0)">Date ▼</th>
+                <th onclick="sortTable(1)">River ▼</th>
+                <th onclick="sortTable(2)">Section ▼</th>
+                <th onclick="sortTable(3)">Level ▼</th>
+                <th onclick="sortTable(4)">Group ▼</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range (where site.RegularPages "Section" "posts") }}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td>{{ .Date.Format "2006-01-02" }}</td>
+                <td><a href="{{ .RelPermalink }}">{{ .Params.river }}</a></td>
+                <td>{{ .Params.section }}</td>
+                <td>{{ .Params.level }}</td>
+                <td>{{ delimit .Params.group ", " }}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Simple Filter Function
+function filterTable() {
+    let input = document.getElementById("logSearch").value.toLowerCase();
+    let rows = document.getElementById("logTable").getElementsByTagName("tr");
+    for (let i = 1; i < rows.length; i++) {
+        rows[i].style.display = rows[i].innerText.toLowerCase().includes(input) ? "" : "none";
+    }
+}
+
+// Simple Sort Function
+function sortTable(n) {
+    let table = document.getElementById("logTable");
+    let rows = Array.from(table.rows).slice(1);
+    let dir = table.getAttribute("data-dir") === "asc" ? "desc" : "asc";
+    table.setAttribute("data-dir", dir);
+    
+    rows.sort((a, b) => {
+        let x = a.cells[n].innerText.toLowerCase();
+        let y = b.cells[n].innerText.toLowerCase();
+        return dir === "asc" ? x.localeCompare(y) : y.localeCompare(x);
+    });
+    
+    rows.forEach(row => table.tBodies[0].appendChild(row));
+}
+</script>
+{{ end }}	

@@ -15,13 +15,15 @@ theme = 'anubis'
   description = 'Personal river database'
   mainSections = ["posts"] # This ensures your logs show up on the homepage
   style = "auto"           # Enables the Dark/Light mode switcher
+  disableSummary = true  # Hides the text excerpt for each entry
+  readMore = false       # Hides the "Read More" link
+
+[[menu.main]]
+    name = "Logbook"
+    url = "/logbook/"
+    weight = 1
 
 [[menu.main]]
     name = "Rivers"
     url = "/river/"
-    weight = 1
-
-[[menu.main]]
-    name = "Flow Levels"
-    url = "/level/"
     weight = 2

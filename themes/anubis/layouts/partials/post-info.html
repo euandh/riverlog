@@ -11,10 +11,9 @@
     {{ end }}
 
     <div class="river-data" style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.05); border-left: 3px solid #0077cc;">
-        {{ with .Params.river }}<strong>River:</strong> {{ . }} | {{ end }}
-        {{ with .Params.section }}<strong>Section:</strong> {{ . }} | {{ end }}
-        {{ with .Params.level }}<strong>Level:</strong> {{ . }} | {{ end }}
-        {{ with .Params.weather }}<br><small><strong>Weather:</strong> {{ . }}</small>{{ end }}
+    {{ with .Params.river }}<strong>River:</strong> {{ . }} | {{ end }}
+    {{ with .Params.section }}<strong>Section:</strong> {{ . }} | {{ end }}
+    {{ with .Params.level }}<strong>Level:</strong> {{ . }} | {{ end }} {{ with .Params.weather }}<br><small><strong>Weather:</strong> {{ . }}</small> {{ end }}
     </div>
 
     <div class="post-taxonomies">
