@@ -5,6 +5,7 @@
     <ul class="river-list" style="list-style: none; padding: 0;">
         {{ range .Site.RegularPages.GroupByParam "river" }}
             {{ if .Key }} 
+            {{ $termPage := site.GetPage (print "rivers/" (.Key | urlize)) }}
             <li style="margin-bottom: 15px;">
                 <a href="{{ $termPage.RelPermalink }}" style="display: block; padding: 20px; background: #f4f4f4; border-radius: 8px; text-decoration: none; color: #333; border: 1px solid #ddd;">
                     <strong style="font-size: 1.3rem;">{{ .Key | humanize }}</strong>
