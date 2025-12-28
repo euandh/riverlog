@@ -26,10 +26,10 @@ theme = 'anubis'
 
 [[menu.main]]
     name = "Rivers"
-    url = "/river/"
+    url = "/rivers/"
     weight = 2
 
 [[menu.main]]
     name = "Regions"
-    url = "/regions"
+    url = "/regions/"
     weight = 3

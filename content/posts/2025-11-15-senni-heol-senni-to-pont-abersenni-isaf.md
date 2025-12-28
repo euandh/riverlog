@@ -4,7 +4,7 @@ date: 2025-11-15
 river: "Senni"
 region: "South Wales"
 section: "Heol Senni to Pont Abersenni-isaf (2 km)"
-level: "0.9m on Usk gauge (4 on usr gauge)"
+level: "0.9 m on Usk gauge (4 on weir gauge)"
 weather: "10°C, cloudy"
 group: ["Me", "ETP", "Clarkson", "Lyra", "Liam"]
 draft: false
