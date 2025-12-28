@@ -3,20 +3,25 @@
   <h1>Browse by Regions</h1>
   
   <ul class="region-list" style="list-style: none; padding: 0;">
-    {{ range $name, $taxonomy := .Site.Taxonomies.regions }}
-      <li style="margin-bottom: 10px;">
-        <a href="{{ "/regions/" | relLangURL }}{{ $name | urlize }}" style="font-size: 1.2rem; font-weight: bold; text-decoration: none; display: block; padding: 15px; background: #f4f4f4; border-radius: 5px; color: #333;">
-          {{ $name | humanize }} 
-          <span style="font-size: 0.9rem; font-weight: normal; color: #666;">
-            ({{ $taxonomy.Count }} entries)
-          </span>
-        </a>
-      </li>
+    {{ $regions := .Site.Taxonomies.regions }}
+    
+    {{ if $regions }}
+      {{ range $name, $taxonomy := $regions }}
+        <li style="margin-bottom: 10px;">
+          <a href="{{ "/regions/" | relLangURL }}{{ $name | urlize }}" style="display: block; padding: 15px; background: #f4f4f4; border-radius: 5px; text-decoration: none; color: #333;">
+            <span style="font-size: 1.2rem; font-weight: bold;">{{ $name | humanize }}</span>
+            <span style="font-size: 0.9rem; color: #666; margin-left: 10px;">
+              ({{ $taxonomy.Count }} entries)
+            </span>
+          </a>
+        </li>
+      {{ end }}
+    {{ else }}
+      <p style="color: red;">
+        <strong>Debug:</strong> No regions found. <br>
+        Check your <code>hugo.toml</code> to ensure <code>[taxonomies] region = "regions"</code> is correct.
+      </p>
     {{ end }}
   </ul>
-
-  {{ if not .Site.Taxonomies.regions }}
-    <p>No regions found. Make sure your posts have 'region: "Name"' in the frontmatter.</p>
-  {{ end }}
 </div>
 {{ end }}
