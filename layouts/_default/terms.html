@@ -1,18 +1,22 @@
 {{ define "main" }}
 <div class="terms-container">
-  <h1>Browse by {{ .Title }}</h1>
+  <h1>Browse by Regions</h1>
   
   <ul class="region-list" style="list-style: none; padding: 0;">
-    {{ range .Data.Terms }}
+    {{ range $name, $taxonomy := .Site.Taxonomies.regions }}
       <li style="margin-bottom: 10px;">
-        <a href="{{ .Page.RelPermalink }}" style="font-size: 1.2rem; font-weight: bold; text-decoration: none; display: block; padding: 15px; background: #f4f4f4; border-radius: 5px;">
-          {{ .Page.Title }} 
+        <a href="{{ "/regions/" | relLangURL }}{{ $name | urlize }}" style="font-size: 1.2rem; font-weight: bold; text-decoration: none; display: block; padding: 15px; background: #f4f4f4; border-radius: 5px; color: #333;">
+          {{ $name | humanize }} 
           <span style="font-size: 0.9rem; font-weight: normal; color: #666;">
-            ({{ .Count }} entries)
+            ({{ $taxonomy.Count }} entries)
           </span>
         </a>
       </li>
     {{ end }}
   </ul>
+
+  {{ if not .Site.Taxonomies.regions }}
+    <p>No regions found. Make sure your posts have 'region: "Name"' in the frontmatter.</p>
+  {{ end }}
 </div>
 {{ end }}
