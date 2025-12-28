@@ -2,35 +2,26 @@
 <div class="logbook-container">
     <h1>{{ .Title }}</h1>
 
-    <div class="region-filters" style="margin-bottom: 15px;">
-        <strong>Browse by Region: </strong>
-        {{ range $name, $taxonomy := .Site.Taxonomies.regions }}
-            <a href="{{ "/regions/" | relLangURL }}{{ $name | urlize }}" style="margin-right: 10px; text-decoration: underline;">
-                {{ $name | humanize }}
-            </a>
-        {{ end }}
-    </div>
-    
     <input type="text" id="logSearch" onkeyup="filterTable()" placeholder="Type to filter by river, region, or level..." style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px;">
 
     <table id="logTable" style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr style="background: #f4f4f4; text-align: left; cursor: pointer;">
                 <th onclick="sortTable(0)">Date ▼</th>
-                <th onclick="sortTable(1)">Region ▼</th>
-                <th onclick="sortTable(2)">River ▼</th>
-                <th onclick="sortTable(3)">Section ▼</th>
-                <th onclick="sortTable(4)">Level ▼</th>
+                <th onclick="sortTable(1)">River ▼</th>
+                <th onclick="sortTable(2)">Section ▼</th>
+                <th onclick="sortTable(3)">Level ▼</th>
+                <th onclick="sortTable(4)">Region ▼</th>
             </tr>
         </thead>
         <tbody>
             {{ range (where site.RegularPages "Section" "posts") }}
             <tr style="border-bottom: 1px solid #eee;">
                 <td>{{ .Date.Format "2006-01-02" }}</td>
-                <td>{{ .Params.region }}</td> 
                 <td><a href="{{ .RelPermalink }}">{{ .Params.river }}</a></td>
                 <td>{{ .Params.section }}</td>
                 <td>{{ .Params.level }}</td>
+                <td>{{ .Params.region }}</td> 
             </tr>
             {{ end }}
         </tbody>

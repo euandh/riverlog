@@ -28,3 +28,8 @@ theme = 'anubis'
     name = "Rivers"
     url = "/river/"
     weight = 2
+
+[[menu.main]]
+    name = "Regions"
+    url = "/regions"
+    weight = 3
