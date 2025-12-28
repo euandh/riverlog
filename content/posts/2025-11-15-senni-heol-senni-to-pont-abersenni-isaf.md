@@ -2,6 +2,7 @@
 title: "Senni - Heol Senni to Pont Abersenni-isaf"
 date: 2025-11-15
 river: "Senni"
+region: "South Wales"
 section: "Heol Senni to Pont Abersenni-isaf (2 km)"
 level: "0.9m on Usk gauge (4 on usr gauge)"
 weather: "10°C, cloudy"

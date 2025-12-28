@@ -9,6 +9,7 @@ theme = 'anubis'
   level = 'level'
   group = 'group'
   weather = 'weather'
+  region = 'regions'
 
 [params]
   author = 'euandh'

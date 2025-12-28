@@ -2,6 +2,7 @@
 title: "Usk - Sennybridge to Aberbran"
 date: 2025-11-16
 river: "Usk"
+region: "South Wales"
 section: "Sennybridge to Aberbran (~9.5 km)"
 level: "0.7 m"
 weather: "7°C and cloudy"

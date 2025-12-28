@@ -2,6 +2,7 @@
 title: "Dart - Dartmeet to Newbridge (Upper)"
 date: 2025-12-06
 river: "Dart"
+region: "Dartmoor"
 section: "Upper"
 level: "1.08 - 1.21 m"
 weather: "10°C, intermittent heavy rain"
