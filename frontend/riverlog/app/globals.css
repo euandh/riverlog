@@ -20,8 +20,21 @@
 }
 
 h1 {
-  font-size: larger;
+  font-size: xxx-large;
   font-weight: bold;
+}
+
+.prose h1, .prose h2 {
+  font-size: 1.05rem !important; /* Forces them to be smaller */
+  font-weight: 700 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+  line-height: 1.2 !important;
+}
+
+h4 {
+  font-size:medium;
+  color:aquamarine;
 }
 
 body {
