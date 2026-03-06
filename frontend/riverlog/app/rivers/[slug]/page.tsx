@@ -1,21 +1,25 @@
-import PocketBase from 'pocketbase';
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
-
-const pb = new PocketBase('http://127.0.0.1:8090');
+import pb from '@/lib/pocketbase';
+import { notFound } from 'next/navigation';
 
 export default async function RiverPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
   
   // Fetch the overarching river
-  const river = await pb.collection('rivers').getFirstListItem(`slug="${slug}"`);
+  const river = await pb.collection('rivers').getFirstListItem(`slug="${slug}"`).catch(() => null);;
+
+  if (!river){
+    return notFound();
+  }
 
   // Fetch all sections that belong to this specific river
   const sections = await pb.collection('sections').getFullList({
     filter: `river = "${river.id}"`,
     sort: 'name', // Sorts sections alphabetically
   });
+ 
 
   return (
     <main className="p-8 font-sans max-w-4xl mx-auto">

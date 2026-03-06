@@ -1,28 +1,26 @@
-import PocketBase from 'pocketbase';
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
+import pb from '@/lib/pocketbase';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
-
-// 1. Next.js 15 requires searchParams to be a Promise, just like regular params
+// Next.js 15 requires searchParams to be a Promise, just like regular params
 export default async function RiversIndex({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  // 2. Unwrap the search parameters to see if a region was clicked
+  // Unwrap the search parameters to see if a region was clicked
   const resolvedParams = await searchParams;
   const selectedRegion = resolvedParams.region;
 
-  // 3. Fetch all rivers
+  // Fetch all rivers
   const rivers = await pb.collection('rivers').getFullList({
     sort: 'region,name',
   });
 
-  // 4. Extract a unique list of regions (so we don't get 5 "Devon" buttons)
+  // Extract a unique list of regions (so we don't get 5 "Devon" buttons)
   const uniqueRegions = Array.from(new Set(rivers.map((r) => r.region)));
 
-  // 5. Filter the rivers array if a specific region was clicked
+  // Filter the rivers array if a specific region was clicked
   const displayedRivers = selectedRegion
     ? rivers.filter((r) => r.region === selectedRegion)
     : rivers;
@@ -38,8 +36,8 @@ export default async function RiversIndex({
         ]}
       />
 
-      {/* 6. The Filter Buttons */}
-      <div className="flex flex-wrap gap-2 mt-8 mb-6 border-b pb-6">
+      {/* The Filter Buttons */}
+      <div className="flex flex-wrap gap-2 mt-8 mb-6 pb-6">
         {/* The "All Regions" reset button */}
         <Link href="/rivers">
           <button 
@@ -69,7 +67,7 @@ export default async function RiversIndex({
         ))}
       </div>
 
-      {/* 7. Display only the filtered rivers */}
+      {/* Display only the filtered rivers */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {displayedRivers.length === 0 ? (
           <p className="text-gray-600">No rivers found for this region.</p>
