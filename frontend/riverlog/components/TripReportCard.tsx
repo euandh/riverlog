@@ -5,7 +5,7 @@ export default function TripReportCard({ note }: { note: any }) {
         <h3 className="text-xl font-bold text-gray-900">{note.expand?.section?.name}</h3>
         <p className="text-sm text-gray-500 mt-1">
           <span className="font-semibold text-gray-700">Level:</span> {note.water_level} &nbsp;|&nbsp; 
-          <span className="font-semibold text-gray-700"> Date:</span> {new Date(note.date).toLocaleDateString()}
+          <span className="font-semibold text-gray-700"> Date:</span> {new Date(note.date).toLocaleDateString('en-GB')}
         </p>
       </div>
       
