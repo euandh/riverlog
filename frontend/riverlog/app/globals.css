@@ -30,8 +30,19 @@ h4 {
   color:aquamarine;
 }
 
+address{
+  font-style: normal;
+}
+
+footer{
+  position: absolute;
+  bottom: 5px;
+  font-size: smaller;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+

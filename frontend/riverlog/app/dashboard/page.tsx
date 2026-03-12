@@ -1,22 +1,35 @@
 import PageHeader from '@/components/PageHeader';
 import pb from '@/lib/pocketbase';
 import DashboardForm from '@/components/DashboardForm';
-import { createTripReport, createRiver, createSection } from '@/lib/actions';
+import DeleteButton from '@/components/DeleteButton';
+import { createTripReport, createRiver, createSection, logoutAdmin, deleteTripReport } from '@/lib/actions';
 
 export default async function DashboardPage() {
   const rawRivers = await pb.collection('rivers').getFullList({ sort: 'name' }).catch(() => []);
   const rawSections = await pb.collection('sections').getFullList({ sort: 'name' }).catch(() => []);
+  const rawNotes = await pb.collection('notes').getFullList({ sort: '-date', expand: 'section.river' }).catch(() => []);
 
   const rivers = rawRivers.map(r => ({ id: r.id, name: r.name }));
   const sections = rawSections.map(s => ({ id: s.id, river: s.river, name: s.name }));
 
   return (
     <main className="p-8 font-sans max-w-6xl mx-auto">
-      <PageHeader 
-        title="Admin Dashboard"
-        subtitle="Manage your river database"
-        breadcrumbs={[{ label: 'Dashboard' }]}
-      />
+      <div className="relative">
+        <PageHeader 
+          title="Admin Dashboard"
+          subtitle="Manage the river database"
+          breadcrumbs={[{ label: 'Dashboard' }]}
+        />
+        
+        <form action={logoutAdmin} className="absolute top-0 right-0 z-10">
+          <button 
+            type="submit" 
+            className="bg-red-50 text-red-600 font-medium px-4 py-2 rounded-md hover:bg-red-100 transition-colors border border-red-200 mt-2"
+          >
+            Log Out
+          </button>
+        </form>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
         
@@ -87,8 +100,55 @@ export default async function DashboardPage() {
               </form>
             </div>
           </div>
+          
+          {/* RECENT LOGS MANAGER */}
+          <div className="mt-12">
+            <h2 className="text-2xl font-semibold border-b pb-2 text-gray-900 mb-4">Manage Recent Logs</h2>
+            
+            <div className="bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden">
+              {rawNotes.length === 0 ? (
+                <p className="p-6 text-gray-500 text-center">No trip reports found.</p>
+              ) : (
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-200 text-sm text-gray-600">
+                      <th className="p-4 font-semibold">Date</th>
+                      <th className="p-4 font-semibold">Location</th>
+                      <th className="p-4 font-semibold">Level</th>
+                      <th className="p-4 font-semibold text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm">
+                    {rawNotes.map((note) => (
+                      <tr key={note.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                        <td className="p-4 whitespace-nowrap">
+                          {new Date(note.date).toLocaleDateString('en-GB')}
+                        </td>
+                        <td className="p-4">
+                          {/* PocketBase puts expanded relations inside an 'expand' object */}
+                          <span className="font-medium text-gray-900">{note.expand?.section?.expand?.river?.name}</span>
+                          <span className="text-gray-500 ml-1">- {note.expand?.section?.name}</span>
+                        </td>
+                        <td className="p-4">{note.water_level}</td>
+                        <td className="p-4 text-right">
+                          <div className="flex justify-end gap-3">
+                            {/* Wire up edit button */}
+                            <button className="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
+                            
+                            <DeleteButton id={note.id} />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
 
         </div>
+
+
       </div>
     </main>
   );

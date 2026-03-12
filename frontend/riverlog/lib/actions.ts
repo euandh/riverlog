@@ -93,3 +93,25 @@ export async function createSection(formData: FormData) {
   revalidatePath('/dashboard');
   redirect('/dashboard');
 }
+
+export async function logoutAdmin() {
+  const cookieStore = await cookies();
+  
+  // 1. Destroy the VIP wristband
+  cookieStore.delete('pb_auth');
+  
+  // 2. Kick the user back to the public homepage (or login page)
+  redirect('/');
+}
+
+export async function deleteTripReport(formData: FormData) {
+  await loadAuth(); // Always check for the VIP wristband first!
+  
+  const id = formData.get('id') as string;
+  
+  await pb.collection('notes').delete(id);
+
+  // Tell Next.js to wipe the cache so the deleted item vanishes from the screen
+  revalidatePath('/dashboard');
+  revalidatePath('/', 'layout'); // Wipes the cache for the public pages too
+}
