@@ -1,8 +1,9 @@
-'use client'; 
+'use client';
 
 import { useState } from 'react';
+import RichTextEditor from './RichTextEditor';
+import CustomSelect from './CustomSelect';
 
-// We define the shape of the data we expect the server to hand us
 type River = { id: string; name: string };
 type Section = { id: string; river: string; name: string };
 
@@ -15,53 +16,42 @@ export default function DashboardForm({
   sections: Section[];
   action: (formData: FormData) => void;
 }) {
-  // This state remembers which river is currently selected
   const [selectedRiverId, setSelectedRiverId] = useState<string>('');
+  const [selectedSectionId, setSelectedSectionId] = useState<string>('');
 
-  // This dynamically filters the sections to only show ones belonging to the chosen river
+  // Dynamically filter sections based on the chosen river
   const availableSections = sections.filter(section => section.river === selectedRiverId);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-300 mt-8">
       <form action={action} className="flex flex-col gap-6">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* THE RIVER DROPDOWN */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="river" className="font-semibold text-gray-700">River</label>
-            <select 
-              id="river"
-              required
-              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 bg-white"
-              value={selectedRiverId}
-              onChange={(e) => setSelectedRiverId(e.target.value)}
-            >
-              <option value="" disabled>Select a river...</option>
-              {rivers.map((river) => (
-                <option key={river.id} value={river.id}>{river.name}</option>
-              ))}
-            </select>
-          </div>
+        {/* HIDDEN INPUTS: These carry the actual IDs to your Server Action */}
+        <input type="hidden" name="riverId" value={selectedRiverId} />
+        <input type="hidden" name="sectionId" value={selectedSectionId} />
 
-          {/* THE SECTION DROPDOWN */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="sectionId" className="font-semibold text-gray-700">Section</label>
-            <select 
-              id="sectionId"
-              name="sectionId"
-              required
-              disabled={!selectedRiverId}
-              defaultValue="" /* 1. Add this line here */
-              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 bg-white disabled:bg-gray-100"
-            >
-              {/* 2. Remove the word 'selected' from this option! */}
-              <option value="" disabled>Select a section...</option>
-              
-              {availableSections.map((section) => (
-                <option key={section.id} value={section.id}>{section.name}</option>
-              ))}
-            </select>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* THE CUSTOM RIVER SELECT */}
+          <CustomSelect 
+            label="River"
+            options={rivers}
+            value={selectedRiverId}
+            onChange={(id) => {
+              setSelectedRiverId(id);
+              setSelectedSectionId(''); // Reset section if river changes
+            }}
+            placeholder="Select a river..."
+          />
+
+          {/* THE CUSTOM SECTION SELECT */}
+          <CustomSelect 
+            label="Section"
+            options={availableSections}
+            value={selectedSectionId}
+            onChange={setSelectedSectionId}
+            placeholder={selectedRiverId ? "Select a section..." : "Pick a river first"}
+            disabled={!selectedRiverId}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -73,7 +63,7 @@ export default function DashboardForm({
               id="water_level" 
               name="water_level" 
               required 
-              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 font-sans"
             />
           </div>
           
@@ -84,21 +74,19 @@ export default function DashboardForm({
               id="date" 
               name="date" 
               required 
-              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 font-sans"
             />
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="log" className="font-semibold text-gray-700">Trip Log</label>
-          <textarea 
-            id="log" 
+          <label htmlFor="log" className="font-semibold text-gray-700 text-sm">
+            Trip Notes / Conditions
+          </label>
+          <RichTextEditor 
             name="log" 
-            rows={6} 
-            required
-            placeholder="How was the run?"
-            className="border border-gray-300 rounded-md p-3 focus:outline-none focus:border-blue-500"
-          ></textarea>
+            placeholder="Describe the run..." 
+          />
         </div>
 
         <button 

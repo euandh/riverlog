@@ -32,7 +32,6 @@ export async function loginAdmin(formData: FormData) {
   redirect('/dashboard');
 }
 
-// --- HELPER TO SECURE OUR FORMS ---
 async function loadAuth() {
   const cookieStore = await cookies();
   const token = cookieStore.get('pb_auth')?.value;
@@ -41,7 +40,6 @@ async function loadAuth() {
   }
 }
 
-// --- EXISTING ACTIONS (NOW SECURED) ---
 export async function createTripReport(formData: FormData) {
   await loadAuth(); // <-- This runs before every database call!
   
@@ -114,4 +112,29 @@ export async function deleteTripReport(formData: FormData) {
   // Tell Next.js to wipe the cache so the deleted item vanishes from the screen
   revalidatePath('/dashboard');
   revalidatePath('/', 'layout'); // Wipes the cache for the public pages too
+}
+
+export async function updateTripReport(formData: FormData) {
+  // 1. Security check first
+  await loadAuth();
+  
+  // 2. Extract the ID and data from the form
+  const id = formData.get('id') as string;
+  const data = {
+    date: formData.get('date'),
+    water_level: formData.get('water_level'),
+    notes: formData.get('notes'),
+    // We don't allow changing the river/section on update to keep it simple,
+    // but you could add sectionId here if you wanted to allow it.
+  };
+  
+  // 3. Send the update to PocketBase
+  await pb.collection('notes').update(id, data);
+
+  // 4. Wipe the cache so the dashboard shows the fresh data
+  revalidatePath('/dashboard');
+  revalidatePath('/', 'layout'); // Update public pages too
+
+  // 5. Take us back to the main dashboard
+  redirect('/dashboard');
 }

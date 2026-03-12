@@ -46,3 +46,37 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Custom styles for rich text output */
+.rich-text-content ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.rich-text-content ul {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+}
+
+.rich-text-content li {
+  margin-bottom: 0.5rem;
+  display: list-item !important; /* Tailwind sometimes sets this to 'block' */
+}
+
+/* Optional: Make bold and italic look punchy */
+.rich-text-content strong {
+  font-weight: 700;
+}
+
+.rich-text-content em {
+  font-style: italic;
+}
+
+.rich-text-content h1, .rich-text-content h2 {
+  font-size: 1.05rem !important; /* Forces them to be smaller */
+  font-weight: 700 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+  line-height: 1.2 !important;
+}

@@ -3,6 +3,7 @@ import pb from '@/lib/pocketbase';
 import DashboardForm from '@/components/DashboardForm';
 import DeleteButton from '@/components/DeleteButton';
 import { createTripReport, createRiver, createSection, logoutAdmin, deleteTripReport } from '@/lib/actions';
+import Link from 'next/link';
 
 export default async function DashboardPage() {
   const rawRivers = await pb.collection('rivers').getFullList({ sort: 'name' }).catch(() => []);
@@ -57,7 +58,7 @@ export default async function DashboardPage() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="region" className="font-semibold text-gray-700 text-sm">Region</label>
-                  <input type="text" id="region" name="region" required placeholder="e.g. Devon" className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500" />
+                  <input type="text" id="region" name="region" required placeholder="e.g. Dartmoor" className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500" />
                 </div>
                 <button type="submit" className="bg-gray-900 text-white font-bold py-2 rounded-md hover:bg-gray-800 transition-colors mt-2">
                   Create River
@@ -130,14 +131,20 @@ export default async function DashboardPage() {
                           <span className="text-gray-500 ml-1">- {note.expand?.section?.name}</span>
                         </td>
                         <td className="p-4">{note.water_level}</td>
+                        
                         <td className="p-4 text-right">
                           <div className="flex justify-end gap-3">
-                            {/* Wire up edit button */}
-                            <button className="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
+                            <Link 
+                              href={`/dashboard/edit/${note.id}`} 
+                              className="text-blue-600 hover:text-blue-800 font-medium"
+                            >
+                              Edit
+                            </Link>
                             
                             <DeleteButton id={note.id} />
                           </div>
                         </td>
+
                       </tr>
                     ))}
                   </tbody>

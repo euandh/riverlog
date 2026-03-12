@@ -10,7 +10,7 @@ export default function TripReportCard({ note }: { note: any }) {
       </div>
       
       <div 
-        className="prose prose-blue max-w-none text-gray-800" 
+        className="rich-text-content text-gray-800"
         dangerouslySetInnerHTML={{ __html: note.log || "" }} 
       />
     </div>
