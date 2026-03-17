@@ -80,6 +80,19 @@ export default function DashboardForm({
         </div>
 
         <div className="flex flex-col gap-2">
+          <label htmlFor="time" className="font-semibold text-gray-700">Duration (hh:mm)</label>
+          <input 
+            type="text" 
+            id="time" 
+            name="time" 
+            placeholder="e.g. 04:30"
+            pattern="^([0-9]{1,2}):([0-5][0-9])$" 
+            title="Format: hh:mm (e.g., 04:30 or 2:15)"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 font-sans"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
           <label htmlFor="log" className="font-semibold text-gray-700 text-sm">
             Trip Notes / Conditions
           </label>

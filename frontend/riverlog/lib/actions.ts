@@ -46,9 +46,12 @@ export async function createTripReport(formData: FormData) {
   const sectionId = formData.get('sectionId') as string;
   const waterLevel = formData.get('water_level');
   const date = formData.get('date');
-  const log = formData.get('log');
+  const rawLog = formData.get('log') as string || '';
 
-  const formattedLog = `<p>${log}</p>`; 
+  // Clean any copied &nbsp to avoid formatting issues
+  const cleanLog = rawLog.replace(/&nbsp;/g, ' ');
+
+  const formattedLog = `<p>${cleanLog}</p>`; 
   const formattedDate = new Date(date as string).toISOString(); 
 
   await pb.collection('notes').create({
@@ -56,6 +59,7 @@ export async function createTripReport(formData: FormData) {
     water_level: Number(waterLevel),
     date: formattedDate,
     log: formattedLog,
+    time: formData.get('time') || "",
   });
 
   revalidatePath('/dashboard');
