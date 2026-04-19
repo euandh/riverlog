@@ -2,12 +2,19 @@
 
 import dynamic from 'next/dynamic';
 
-// We do the dynamic import HERE, inside a 'use client' file.
 const DynamicMap = dynamic(() => import('./HomeMap'), { 
   ssr: false,
-  loading: () => <div className="w-full h-[500px] bg-gray-200 animate-pulse rounded-lg flex items-center justify-center">Loading Map...</div>
+  loading: () => <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">Loading Map...</div>
 });
 
-export default function MapWrapper({ rivers }: { rivers: any[] }) {
-  return <DynamicMap rivers={rivers} />;
+export default function MapWrapper({ 
+  rivers, 
+  targetCoords, 
+  targetZoom 
+}: { 
+  rivers: any[], 
+  targetCoords: [number, number], 
+  targetZoom: number 
+}) {
+  return <DynamicMap rivers={rivers} targetCoords={targetCoords} targetZoom={targetZoom} />;
 }
