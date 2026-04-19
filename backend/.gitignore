@@ -1,2 +1,7 @@
 pb_data/
 pb_public/
+# The Windows executable
+pocketbase.exe
+
+# The Linux/macOS executable
+pocketbase
