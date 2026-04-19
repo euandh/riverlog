@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import 'leaflet/dist/leaflet.css';
 
 :root {
   --background: #ffffff;
@@ -79,4 +80,13 @@ body {
   margin-top: 1.5em !important;
   margin-bottom: 0.5em !important;
   line-height: 1.2 !important;
+}
+
+/* FORCE LEAFLET TO USE CDN PINS */
+.leaflet-custom-pins .leaflet-marker-icon {
+  content: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png') !important;
+}
+
+.leaflet-custom-pins .leaflet-marker-shadow {
+  content: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png') !important;
 }
