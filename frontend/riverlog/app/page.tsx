@@ -22,9 +22,29 @@ export default async function HomePage() {
   const riversData = await getRivers();
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-8 min-h-screen">
-      {/* Pass the data to the interactive client layout */}
-      <HomeClientLayout rivers={riversData} />
+    <div className="max-w-7xl mx-auto p-4 md:p-8 min-h-screen flex flex-col">
+      
+      {/* Main homepage layout */}
+      <div className="flex-grow">
+        <HomeClientLayout rivers={riversData} />
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-gray-500 text-sm">
+        {/* 'not-italic' prevents the <address> tag's default slanted text */}
+        <address className="not-italic">
+          <p>
+            Author: Euan D-H 
+            <span className="mx-3 text-gray-300">|</span> 
+            <a href="mailto:euan@riverlog.uk" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+              euan@riverlog.uk
+            </a>
+          </p>
+        </address>
+      </footer>
+
     </div>
   );
 }
+  
+
